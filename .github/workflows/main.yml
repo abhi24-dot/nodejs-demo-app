@@ -2,25 +2,27 @@ name: Deploy Node js App
 
 on:
   push:
-     branches: [ main ]
+    branches: [ main ]
 
 jobs:
-    build:
-       runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
 
-       concurrency:
-         group: deploy
-         cancel-in-progress: true
+    concurrency:
+      group: deploy
+      cancel-in-progress: true
 
-       steps:
-         - name: Checkout Repository
-           uses: actions/checkout@v4.2.2
-         - name: Install Dependencies
-           run: npm install
-         - name: Build Node.js App
-           run: npm run build
-         - name: Deploy App
-           run: echo "Deploying App...."
-           
-         
-        
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        working-directory: nodejs-demo-app   
+        run: npm install
+
+      - name: Build Node.js App
+        working-directory: nodejs-demo-app   
+        run: npm run build
+
+      - name: Deploy App
+        run: echo "Deploying App...."
